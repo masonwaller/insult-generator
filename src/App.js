@@ -1,24 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
 function App() {
+  const [words, setWords] = React.useState("");
+
+  const handleClick = () => {
+    let final = "";
+    fetch("https://random-word-api.herokuapp.com/word?number=2")
+      .then(data => data.json())
+      .then(data => data.map(word => (final = final + " " + word)))
+      .then(data => setWords(final));
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => handleClick()}>Generate</button>
+      <ul>
+        <li key={words}>You're a {words}</li>
+      </ul>
     </div>
   );
 }
